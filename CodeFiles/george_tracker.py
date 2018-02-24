@@ -10,9 +10,9 @@ greenUpper = (64, 255, 255)
 ser = None
 
 def setup():
-  connect()
-  communicate()
-  #main()
+  #connect()
+  #communicate()
+  main()
 
 def findObject(frame, lastObjectLocation):
   #convert frame from BGR->HSV
@@ -44,7 +44,7 @@ def findObject(frame, lastObjectLocation):
   return ((-1, -1), -1)
 
 def main():
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(1)
   height = 480
   width = 640
   centerY = 240
@@ -83,7 +83,7 @@ def connect():
   ser = serial.Serial('/dev/cu.usbmodem1421', 9600)
 
 def communicate():
-  
+  pass
 
 setup()
 
