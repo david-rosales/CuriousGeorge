@@ -68,7 +68,7 @@ def main():
       lastObjectLocation = (x, y)
       print(count)
       commands = track_ball(distance, radius, x, y)
-      if "0" in commands:
+      if "0" in commands and nextCommandCount != 40:
         count = 0
         nextCommandCount = 40
         sendCommand("0")
