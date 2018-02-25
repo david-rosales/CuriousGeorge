@@ -7,12 +7,12 @@ String command;
 int left_pin = 2;
 int right_pin = 6;
 int lift_pin = 3;
-int pos_l_grab = 90;
+int pos_l_grab = 87;
 int pos_l_ungrab = 135;
-int pos_r_grab = 90;
+int pos_r_grab = 93;
 int pos_r_ungrab = 45;
 int pos_lift = 135;
-int pos_unlift = 60;
+int pos_unlift = 50;
 
 void setup() {
   // put your setup code here, to run once:
