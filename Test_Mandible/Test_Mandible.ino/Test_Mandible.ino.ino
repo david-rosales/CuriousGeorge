@@ -12,7 +12,7 @@ int pos_l_ungrab = 135;
 int pos_r_grab = 93;
 int pos_r_ungrab = 45;
 int pos_lift = 135;
-int pos_unlift = 50;
+int pos_unlift = 40;
 
 void setup() {
   // put your setup code here, to run once:
@@ -89,7 +89,7 @@ void lift() {
 void unlift() {
   int pos = pos_lift;
   for (pos = pos_lift; pos >= pos_unlift; pos-=1) {
-    pick_up.write(pos_unlift);
+    pick_up.write(pos);
     delay(50);
   }
 }
