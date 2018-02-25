@@ -51,7 +51,8 @@ String readInput() {
 String readInput2() {
   if(Serial.available()>0){
     String data = Serial.readStringUntil('\n');
-    return data
+    return data;
+  }
 }
 
 void setup() {
@@ -68,15 +69,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-<<<<<<< HEAD
-  if (Serial.available()> 0) {
-    command = Serial.readString();
-=======
   //if (Serial.available()> 0) {
   //  command = Serial.readString();
   if (true) {
     command = readInput2();
->>>>>>> 6dbce27d9d45196cb93b2749041881a66c0e5d90
     Serial.println(command);
     if (command == "grab") {
       grab();
@@ -156,11 +152,7 @@ void forward() {
 }
 
 void reverse() {
-<<<<<<< HEAD
-  stop();
-=======
   stopMoving();
->>>>>>> 6dbce27d9d45196cb93b2749041881a66c0e5d90
   analogWrite(motorL_r, 100);
   analogWrite(motorR_r, 100);
 }
