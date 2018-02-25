@@ -14,11 +14,11 @@ ser = None
 def setup():
   #connect()
   #communicate()
-  print("TEST")
-  while True:
-    print("sending")
-    sendCommand("right")
-  #main()
+  #print("TEST")
+  ##while True:
+  ##  print("sending")
+  ##  sendCommand("right")
+  main()
 
 def findObject(frame, lastObjectLocation):
   #convert frame from BGR->HSV
@@ -40,7 +40,7 @@ def findObject(frame, lastObjectLocation):
       #contour = max(contours, key=cv2.contourArea)
       contour = max(contours, key=lambda x: (3*cv2.contourArea(x) - 10*abs(np.linalg.norm(np.array(lastObjectLocation) - np.array(cv2.minEnclosingCircle(x)[0]) ))**2 ))
     ((x, y), radius) = cv2.minEnclosingCircle(contour)
-    print("RADIUS", radius)	
+    #print("RADIUS", radius)	
 
     #if the contour is big enough
     if radius > 10:
@@ -50,28 +50,33 @@ def findObject(frame, lastObjectLocation):
   return ((-1, -1), -1)
 
 def main():
-  cap = cv2.VideoCapture(1)
+  cap = cv2.VideoCapture(0)
   height = 480
   width = 640
   centerY = 240
   centerX = 320
   lastObjectLocation = (-1, -1)
+  count = 0
   while(cap.isOpened()):
+    count+=1
     #frame starts in BGR
     ret, frame = cap.read()
     if ret:
       ((x, y), radius) = findObject(frame, lastObjectLocation)
       distance = 100.0/radius
       lastObjectLocation = (x, y)
+      print(count)
       commands = track_ball(distance, radius, x, y)
-      for command in commands:
-        sendCommand(command)
-      cv2.imshow('feed', frame)
-      if cv2.waitKey(1) == 27:
-        break
+      if(count >= 10):
+        count = 0
+        for command in commands:
+          sendCommand(command)
+      #cv2.imshow('feed', frame)
+      #if cv2.waitKey(1) == 27:
+      #  break
 
   cap.release()
-  cv2.destroyAllWindows()
+  #cv2.destroyAllWindows()
 
 setup()
 

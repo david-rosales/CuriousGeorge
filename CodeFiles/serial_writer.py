@@ -3,4 +3,5 @@ import serial
 ser = serial.Serial('/dev/cu.usbmodem1421',9600)
 
 def sendCommand(command):
-    ser.write(command.encode())
+    print("sending", command)
+    ser.write((command+"\n").encode())

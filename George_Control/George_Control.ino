@@ -51,6 +51,12 @@ String readInput() {
   return "stop";
 }
 
+String readInput2() {
+  if(Serial.available()>0){
+    String data = Serial.readStringUntil('\n');
+    return data
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(19600);
@@ -70,7 +76,7 @@ void loop() {
   //if (Serial.available()> 0) {
   //  command = Serial.readString();
   if (true) {
-    command = readInput();
+    command = readInput2();
     Serial.println(command);
     if (command == "grab") {
       grab();
