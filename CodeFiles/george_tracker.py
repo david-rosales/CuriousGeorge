@@ -71,12 +71,12 @@ def main():
         count = 0
         for command in commands:
           sendCommand(command)
-      #cv2.imshow('feed', frame)
-      #if cv2.waitKey(1) == 27:
-      #  break
+      cv2.imshow('feed', frame)
+      if cv2.waitKey(1) == 27:
+        break
 
   cap.release()
-  #cv2.destroyAllWindows()
+  cv2.destroyAllWindows()
 
 setup()
 
