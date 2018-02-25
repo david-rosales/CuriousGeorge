@@ -66,7 +66,7 @@ def main():
       ((x, y), radius) = findObject(frame, lastObjectLocation)
       distance = 100.0/radius
       lastObjectLocation = (x, y)
-      print(count)
+      print(count, distance)
       commands = track_ball(distance, radius, x, y)
       if "0" in commands and nextCommandCount != 40:
         count = 0
