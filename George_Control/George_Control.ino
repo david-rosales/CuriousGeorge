@@ -3,18 +3,22 @@
 Servo left_grab;
 Servo right_grab;
 Servo pick_up;
-//Motor left;
-//Motor right;
 String command;
-int left_pin = 0;
-int right_pin = 1;
-int lift_pin = 2;
-int pos_l_grab = 0;
-int pos_l_ungrab = 0;
-int pos_r_grab = 0;
-int pos_r_ungrab = 0;
-int pos_lift = 0;
-int pos_unlift = 0;
+int left_pin = num;
+int right_pin = num;
+int lift_pin = num;
+int motorL = num;
+int motorL_f = num;
+int motorL_r = num;
+int motorR = num;
+int motorR_f = num;
+int motorR_r = num:
+int pos_l_grab = 90;
+int pos_l_ungrab = 135;
+int pos_r_grab = 90;
+int pos_r_ungrab = 45;
+int pos_lift = 135;
+int pos_unlift = 45;
 
 void setup() {
   // put your setup code here, to run once:
@@ -22,6 +26,12 @@ void setup() {
   left_grab.attach(left_pin);
   right_grab.attach(right_pin);
   pick_up.attach(lift_pin);
+  pinMode(motorL, OUTPUT);
+  pinMode(motorL_f, OUTPUT);
+  pinMode(motorL_r, OUTPUT);
+  pinMode(motorR, OUTPUT);
+  pinMode(motorR_f, OUTPUT);
+  pinMode(motorR_r, OUTPUT);
 }
 
 void loop() {
@@ -51,21 +61,27 @@ void loop() {
     }
     else if (command == "forward") {
       forward();
-      Serial.print();
+      //Serial.print();
+    }
+    else if (command == "reverse") {
+      reverse();
+      //Serial.print();
     }
     else if (command == "right") {
       right();
-      Serial.print();
+      //Serial.print();
     }
     else if (command == "left") {
       left();
-      Serial.print();
+      //Serial.print();
     }
-    delay(10) //is this necessary
+    delay(10) //is this necessary?
   }
 }
 
 void grab() {
+  //analogWrite(motorL, 0);
+  //analogWrite(motorR, 0);
   left_grab.write(pos_l_grab);
   right_grab.write(pos_r_grab);
 }
@@ -84,13 +100,39 @@ void unlift() {
 }
 
 void forward() {
-  
+  digitalWrite(motorL_f, HIGH);
+  digitalWrite(motorL_r, LOW);
+  analogWrite(motorL, 100);
+  digitalWrite(motorR_f, HIGH);
+  digitalWrite(motorR_r, LOW);
+  analogWrite(motorR, 100);
+  //either need a way of doing feedback on this while it's moving forward/turning, or need to just make it move in little spurts
+  //also with the way this is currently written, the car won't ever stop 
+}
+
+void reverse() {
+  digitalWrite(motorL_f, LOW);
+  digitalWrite(motorL_r, HIGH);
+  analogWrite(motorL, 100);
+  digitalWrite(motorR_f, LOW);
+  digitalWrite(motorR_r, HIGH);
+  analogWrite(motorR, 100);
 }
 
 void right() {
-  
+  digitalWrite(motorL_f, HIGH);
+  digitalWrite(motorL_r, LOW);
+  analogWrite(motorL, 100);
+  digitalWrite(motorR_f, LOW);
+  digitalWrite(motorR_r, HIGH);
+  analogWrite(motorR, 100);
 }
 
 void left() {
-  
+  digitalWrite(motorL_f, LOW);
+  digitalWrite(motorL_r, HIGH);
+  analogWrite(motorL, 100);
+  digitalWrite(motorR_f, HIGH);
+  digitalWrite(motorR_r, LOW);
+  analogWrite(motorR, 100);
 }
