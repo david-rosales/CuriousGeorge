@@ -77,9 +77,9 @@ def main():
         nextCommandCount = 5
         for command in commands:
           sendCommand(command)
-      #cv2.imshow('feed', frame)
-      #if cv2.waitKey(1) == 27:
-      #  break
+      cv2.imshow('feed', frame)
+      if cv2.waitKey(1) == 27:
+        break
 
   cap.release()
   cv2.destroyAllWindows()
