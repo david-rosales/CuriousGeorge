@@ -4,6 +4,7 @@ Servo left_grab;
 Servo right_grab;
 Servo pick_up;
 String command;
+<<<<<<< HEAD
 int left_pin = 2;
 int right_pin = 6;
 int lift_pin = 3;
@@ -11,6 +12,18 @@ int motorL_f = 9;
 int motorL_r = 10;
 int motorR_f = 5;
 int motorR_r = 4;
+=======
+int num = 1;
+int left_pin = num;
+int right_pin = num;
+int lift_pin = num;
+int motorL = num;
+int motorL_f = num;
+int motorL_r = num;
+int motorR = num;
+int motorR_f = num;
+int motorR_r = num;
+>>>>>>> 6dbce27d9d45196cb93b2749041881a66c0e5d90
 int pos_l_grab = 90;
 int pos_l_ungrab = 135;
 int pos_r_grab = 90;
@@ -18,9 +31,45 @@ int pos_r_ungrab = 45;
 int pos_lift = 135;
 int pos_unlift = 45;
 
+bool reading = false;
+char inData[10]; // Allocate some space for the string, maximum 10
+char inChar; // Where to store the character read
+byte index = 0; // Index into array; where to store the character
+
+String readInput() {
+  while(Serial.available() > 0) // Don't read unless
+  {
+    reading = true;
+    if(index < 10) // One less than the size of the array
+    {
+      inChar = Serial.read(); // Read a character
+      inData[index] = inChar; // Store it
+      index++; // Increment where to write next
+      inData[index] = '\0'; // Null terminate the string
+    }
+  }
+  if(Serial.available() == 0 && reading)
+  {
+    //Serial.print(inData);
+    String command = String(inData);
+    for(int i =0;i<10;i++)
+    {inData[i] = "";}
+    reading = false;
+    index = 0;
+    return command;
+  }
+  return "stop";
+}
+
+String readInput2() {
+  if(Serial.available()>0){
+    String data = Serial.readStringUntil('\n');
+    return data
+}
+
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(19600);
   left_grab.attach(left_pin);
   right_grab.attach(right_pin);
   pick_up.attach(lift_pin);
@@ -32,8 +81,15 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+<<<<<<< HEAD
   if (Serial.available()> 0) {
     command = Serial.readString();
+=======
+  //if (Serial.available()> 0) {
+  //  command = Serial.readString();
+  if (true) {
+    command = readInput2();
+>>>>>>> 6dbce27d9d45196cb93b2749041881a66c0e5d90
     Serial.println(command);
     if (command == "grab") {
       grab();
@@ -73,7 +129,7 @@ void loop() {
       //Serial.print();
     }
     else if (command == "stop") {
-      stop();
+      stopMoving();
     }
     delay(10); //is this necessary?
   }
@@ -97,7 +153,7 @@ void unlift() {
   pick_up.write(pos_unlift);
 }
 
-void stop() {
+void stopMoving() {
 	analogWrite(motorL_f, 0);
 	analogWrite(motorL_r, 0); 
 	analogWrite(motorR_f, 0); 
@@ -105,7 +161,7 @@ void stop() {
 }
 
 void forward() {
-  stop();
+  stopMoving();
   analogWrite(motorL_f, 100);
   analogWrite(motorR_f, 100);
   //either need a way of doing feedback on this while it's moving forward/turning, or need to just make it move in little spurts
@@ -113,19 +169,23 @@ void forward() {
 }
 
 void reverse() {
+<<<<<<< HEAD
   stop();
+=======
+  stopMoving();
+>>>>>>> 6dbce27d9d45196cb93b2749041881a66c0e5d90
   analogWrite(motorL_r, 100);
   analogWrite(motorR_r, 100);
 }
 
 void right() {
-  stop();
+  stopMoving();
   analogWrite(motorL_f, 100);
   analogWrite(motorR_r, 100);
 }
 
 void left() {
-  stop(); 
+  stopMoving(); 
   analogWrite(motorL_r, 100);
   analogWrite(motorR_f, 100);
 }

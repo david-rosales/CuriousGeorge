@@ -34,10 +34,10 @@ def track_ball(distance, radius, x, y):
     commands = []
 
     if distance_delta > DIST_DELTA_THRESHOLD:
-        commands.append("move:"+str(round(distance_delta, 2)))
+        commands.append("forward") #move:+str(round(distance_delta, 2))
    
-    print("distance: ", distance)
-    print("horizontal_distance: ", horizontal_distance)
+    #print("distance: ", distance)
+    #print("horizontal_distance: ", horizontal_distance)
     # turn gives angle going CCW from x-axis
     turn = math.atan2(distance, -horizontal_distance)
 
@@ -46,7 +46,10 @@ def track_ball(distance, radius, x, y):
 
 
     if abs(turn) > CENTER_DELTA_THRESHOLD:
-        commands.append("turn:"+str(round(turn, 2)))
+        if(turn >= 0):
+            commands.append("right")
+        else:
+            commands.append("left")
 
     # check if we are close enough to grab
     if len(commands) == 0:
