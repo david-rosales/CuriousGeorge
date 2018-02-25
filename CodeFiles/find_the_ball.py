@@ -1,3 +1,4 @@
+import math
 # takes the sensed distance to the tennis ball and location on the coordinate system overlaid over the camera frame
 # (0,0) is the top left, increasing down and to the right
 # width = 640, height = 480 
@@ -28,22 +29,24 @@ def track_ball(distance, radius, x, y):
     MAX_SPEED = 10
     MAX_TURN = 10
     DIST_DELTA_THRESHOLD = 2
-    CENTER_DELTA_THRESHOLD = 2
+    CENTER_DELTA_THRESHOLD = math.pi/32
 
     commands = []
 
     if distance_delta > DIST_DELTA_THRESHOLD:
-        commands.append("move:"+round(distance_delta, 2))
+        commands.append("move:"+str(round(distance_delta, 2)))
    
+    print("distance: ", distance)
+    print("horizontal_distance: ", horizontal_distance)
     # turn gives angle going CCW from x-axis
-    turn = math.atan2(horizontal_distance, distance)
+    turn = math.atan2(distance, -horizontal_distance)
 
     #convert to angle going CW from y-axis (makes sense from George's perspective)
     turn = -turn + math.pi/2
 
 
-    if center_delta > CENTER_DELTA_THRESHOLD:
-        commands.append("turn:"+round(turn, 2))
+    if abs(turn) > CENTER_DELTA_THRESHOLD:
+        commands.append("turn:"+str(round(turn, 2)))
 
     # check if we are close enough to grab
     if len(commands) == 0:
