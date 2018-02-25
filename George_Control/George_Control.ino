@@ -4,13 +4,16 @@ Servo left_grab;
 Servo right_grab;
 Servo pick_up;
 String command;
+int num = 1;
 int left_pin = num;
 int right_pin = num;
 int lift_pin = num;
+int motorL = num;
 int motorL_f = num;
 int motorL_r = num;
+int motorR = num;
 int motorR_f = num;
-int motorR_r = num:
+int motorR_r = num;
 int pos_l_grab = 90;
 int pos_l_ungrab = 135;
 int pos_r_grab = 90;
@@ -18,9 +21,39 @@ int pos_r_ungrab = 45;
 int pos_lift = 135;
 int pos_unlift = 45;
 
+bool reading = false;
+char inData[10]; // Allocate some space for the string, maximum 10
+char inChar; // Where to store the character read
+byte index = 0; // Index into array; where to store the character
+
+String readInput() {
+  while(Serial.available() > 0) // Don't read unless
+  {
+    reading = true;
+    if(index < 10) // One less than the size of the array
+    {
+      inChar = Serial.read(); // Read a character
+      inData[index] = inChar; // Store it
+      index++; // Increment where to write next
+      inData[index] = '\0'; // Null terminate the string
+    }
+  }
+  if(Serial.available() == 0 && reading)
+  {
+    //Serial.print(inData);
+    String command = String(inData);
+    for(int i =0;i<10;i++)
+    {inData[i] = "";}
+    reading = false;
+    index = 0;
+    return command;
+  }
+  return "stop";
+}
+
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(19600);
   left_grab.attach(left_pin);
   right_grab.attach(right_pin);
   pick_up.attach(lift_pin);
@@ -34,8 +67,11 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (Serial.available()> 0) {
-    command = Serial.readString();
+  //if (Serial.available()> 0) {
+  //  command = Serial.readString();
+  if (true) {
+    command = readInput();
+    Serial.println(command);
     if (command == "grab") {
       grab();
       //need a delay here to give it time to act? not really sure if the code proceeds immediately 
@@ -74,9 +110,9 @@ void loop() {
       //Serial.print();
     }
     else if (command == "stop") {
-      stop();
+      stopMoving();
     }
-    delay(10) //is this necessary?
+    delay(10); //is this necessary?
   }
 }
 
@@ -100,7 +136,7 @@ void unlift() {
   pick_up.write(pos_unlift);
 }
 
-void stop() {
+void stopMoving() {
 	analogWrite(motorL_f, 0);
 	analogWrite(motorL_r, 0); 
 	analogWrite(motorR_f, 0); 
@@ -108,7 +144,7 @@ void stop() {
 }
 
 void forward() {
-  stop();
+  stopMoving();
   analogWrite(motorL_f, 100);
   analogWrite(motorR_f, 100);
   //either need a way of doing feedback on this while it's moving forward/turning, or need to just make it move in little spurts
@@ -116,19 +152,19 @@ void forward() {
 }
 
 void reverse() {
-  stop();
-  analogWrite(motorL_r 100);
+  stopMoving();
+  analogWrite(motorL_r, 100);
   analogWrite(motorR_r, 100);
 }
 
 void right() {
-  stop();
+  stopMoving();
   analogWrite(motorL_f, 100);
   analogWrite(motorR_r, 100);
 }
 
 void left() {
-  stop(); 
+  stopMoving(); 
   analogWrite(motorL_r, 100);
   analogWrite(motorR_f, 100);
 }
