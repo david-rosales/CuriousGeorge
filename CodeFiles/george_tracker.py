@@ -72,7 +72,7 @@ def main():
         count = 0
         nextCommandCount = 40
         sendCommand("0")
-      if(count >= 5):
+      if(count >= nextCommandCount):
         count = 0
         nextCommandCount = 5
         for command in commands:
