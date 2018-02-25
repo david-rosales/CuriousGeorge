@@ -28,7 +28,7 @@ def track_ball(distance, radius, x, y):
     
     MAX_SPEED = 10
     MAX_TURN = 10
-    DIST_DELTA_THRESHOLD = 1
+    DIST_DELTA_THRESHOLD = 1.5
     CENTER_DELTA_THRESHOLD = math.pi/3
 
     commands = []
