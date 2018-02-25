@@ -42,7 +42,8 @@ void loop() {
       grab();
       lift();
       unlift();
-      ungrab();
+      left_grab.write(pos_l_ungrab);
+      right_grab.write(pos_r_ungrab);
       //need a delay here to give it time to act? not really sure if the code proceeds immediately 
       //after it gives the servo command or if it waits til the servos get to their commanded pose
       Serial.print("grabbed");
@@ -112,7 +113,7 @@ void lift() {
   int pos = pos_unlift;
   for (pos = pos_unlift; pos <= pos_lift; pos +=1) {
     pick_up.write(pos);
-    delay(50);  
+    delay(10);  
   }
 }
 
