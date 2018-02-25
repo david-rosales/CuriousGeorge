@@ -50,7 +50,7 @@ def findObject(frame, lastObjectLocation):
   return ((-1, -1), -1)
 
 def main():
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(1)
   height = 480
   width = 640
   centerY = 240
@@ -76,7 +76,7 @@ def main():
       #  break
 
   cap.release()
-  #cv2.destroyAllWindows()
+  cv2.destroyAllWindows()
 
 setup()
 
