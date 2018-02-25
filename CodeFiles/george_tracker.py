@@ -57,6 +57,7 @@ def main():
   centerX = 320
   lastObjectLocation = (-1, -1)
   count = 0
+  nextCommandCount = 5
   while(cap.isOpened()):
     count+=1
     #frame starts in BGR
@@ -67,8 +68,13 @@ def main():
       lastObjectLocation = (x, y)
       print(count)
       commands = track_ball(distance, radius, x, y)
-      if(count >= 10):
+      if "0" in commands and nextCommandCount != 40:
         count = 0
+        nextCommandCount = 40
+        sendCommand("0")
+      if(count >= nextCommandCount):
+        count = 0
+        nextCommandCount = 5
         for command in commands:
           sendCommand(command)
       #cv2.imshow('feed', frame)
