@@ -3,6 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import serial
+from find_the_ball import track_ball
 
 greenLower = (25, 66, 30)
 greenUpper = (84, 255, 255)
@@ -12,7 +13,8 @@ ser = None
 def setup():
   #connect()
   #communicate()
-  main()
+ 
+ main()
 
 def findObject(frame, lastObjectLocation):
   #convert frame from BGR->HSV
@@ -57,24 +59,7 @@ def main():
       ((x, y), radius) = findObject(frame, lastObjectLocation)
       distance = 100.0/radius
       lastObjectLocation = (x, y)
-      horizontal = ""
-      if centerX-x > 50:
-        horizontal = "LEFT"
-      elif centerX-x < -50:
-        horizontal = "RIGHT"
-
-      vertical = ""
-      if centerY-y > 50:
-        vertical = "FORWARD"
-      elif centerY-y < -50:
-        vertical = "BACKWARD"
-
-      if x == -1: horizontal = "SEARCH"
-      if y == -1: vertical = "SEARCH"
-      print(x, y)
-      print(horizontal, vertical)
-      print("distance:", distance, "ft")
-      print()
+      print(track_ball(distance, radius, x, y))
       cv2.imshow('feed', frame)
       if cv2.waitKey(1) == 27:
         break

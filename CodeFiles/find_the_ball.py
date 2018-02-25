@@ -10,7 +10,7 @@ def track_ball(distance, radius, x, y):
     TENNIS_BALL_ACTUAL = 5
 
     # Move forward until wihtin GRAB_DISTANCE
-    GRAB_DISTANCE = 10
+    GRAB_DISTANCE = 0.5
 
     # grab if the circle is near this point
     GRAB_Y = 240 
@@ -28,8 +28,8 @@ def track_ball(distance, radius, x, y):
     
     MAX_SPEED = 10
     MAX_TURN = 10
-    DIST_DELTA_THRESHOLD = 2
-    CENTER_DELTA_THRESHOLD = math.pi/32
+    DIST_DELTA_THRESHOLD = 0
+    CENTER_DELTA_THRESHOLD = math.pi/3
 
     commands = []
 
