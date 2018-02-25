@@ -128,6 +128,7 @@ void right() {
 }
 
 void left() {
+  stop(); 
   analogWrite(motorL_r, 100);
   analogWrite(motorR_f, 100);
 }
