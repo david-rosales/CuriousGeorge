@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import serial
 from find_the_ball import track_ball
+from serial_writer import sendCommand
 
 greenLower = (25, 66, 30)
 greenUpper = (84, 255, 255)
@@ -13,8 +14,11 @@ ser = None
 def setup():
   #connect()
   #communicate()
- 
- main()
+  print("TEST")
+  while True:
+    print("sending")
+    sendCommand("right")
+  #main()
 
 def findObject(frame, lastObjectLocation):
   #convert frame from BGR->HSV
@@ -59,19 +63,15 @@ def main():
       ((x, y), radius) = findObject(frame, lastObjectLocation)
       distance = 100.0/radius
       lastObjectLocation = (x, y)
-      print(track_ball(distance, radius, x, y))
+      commands = track_ball(distance, radius, x, y)
+      for command in commands:
+        sendCommand(command)
       cv2.imshow('feed', frame)
       if cv2.waitKey(1) == 27:
         break
 
   cap.release()
   cv2.destroyAllWindows()
-
-def connect():
-  ser = serial.Serial('/dev/cu.usbmodem1421', 9600)
-
-def communicate():
-  pass
 
 setup()
 
