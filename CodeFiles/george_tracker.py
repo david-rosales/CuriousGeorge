@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import serial
 
-greenLower = (29, 86, 6)
-greenUpper = (64, 255, 255)
+greenLower = (25, 66, 30)
+greenUpper = (84, 255, 255)
 
 ser = None
 
@@ -31,10 +31,10 @@ def findObject(frame, lastObjectLocation):
     if(lastObjectLocation == (-1, -1)):
       contour = max(contours, key=cv2.contourArea)
     else:
-      contour = max(contours, key=cv2.contourArea)
-      #contour = max(contours, key=lambda x: (cv2.contourArea(x) - 10*np.linalg.norm(np.array(lastObjectLocation) - np.array(cv2.minEnclosingCircle(x)[0]) ) ))
+      #contour = max(contours, key=cv2.contourArea)
+      contour = max(contours, key=lambda x: (3*cv2.contourArea(x) - 10*abs(np.linalg.norm(np.array(lastObjectLocation) - np.array(cv2.minEnclosingCircle(x)[0]) ))**2 ))
     ((x, y), radius) = cv2.minEnclosingCircle(contour)
-    print("RADIUS", radius)
+    print("RADIUS", radius)	
 
     #if the contour is big enough
     if radius > 10:
@@ -75,6 +75,9 @@ def main():
       print(horizontal, vertical)
       print("distance:", distance, "ft")
       print()
+      cv2.imshow('feed', frame)
+      if cv2.waitKey(1) == 27:
+        break
 
   cap.release()
   cv2.destroyAllWindows()
