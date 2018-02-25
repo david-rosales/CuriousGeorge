@@ -7,10 +7,8 @@ String command;
 int left_pin = num;
 int right_pin = num;
 int lift_pin = num;
-int motorL = num;
 int motorL_f = num;
 int motorL_r = num;
-int motorR = num;
 int motorR_f = num;
 int motorR_r = num:
 int pos_l_grab = 90;
@@ -75,6 +73,9 @@ void loop() {
       left();
       //Serial.print();
     }
+    else if (command == "stop") {
+      stop();
+    }
     delay(10) //is this necessary?
   }
 }
@@ -99,40 +100,34 @@ void unlift() {
   pick_up.write(pos_unlift);
 }
 
+void stop() {
+	analogWrite(motorL_f, 0);
+	analogWrite(motorL_r, 0); 
+	analogWrite(motorR_f, 0); 
+	analogWrite(motorR_r, 0); 
+}
+
 void forward() {
-  digitalWrite(motorL_f, HIGH);
-  digitalWrite(motorL_r, LOW);
-  analogWrite(motorL, 100);
-  digitalWrite(motorR_f, HIGH);
-  digitalWrite(motorR_r, LOW);
-  analogWrite(motorR, 100);
+  stop();
+  analogWrite(motorL_f, 100);
+  analogWrite(motorR_f, 100);
   //either need a way of doing feedback on this while it's moving forward/turning, or need to just make it move in little spurts
   //also with the way this is currently written, the car won't ever stop 
 }
 
 void reverse() {
-  digitalWrite(motorL_f, LOW);
-  digitalWrite(motorL_r, HIGH);
-  analogWrite(motorL, 100);
-  digitalWrite(motorR_f, LOW);
-  digitalWrite(motorR_r, HIGH);
-  analogWrite(motorR, 100);
+  stop();
+  analogWrite(motorL_r 100);
+  analogWrite(motorR_r, 100);
 }
 
 void right() {
-  digitalWrite(motorL_f, HIGH);
-  digitalWrite(motorL_r, LOW);
-  analogWrite(motorL, 100);
-  digitalWrite(motorR_f, LOW);
-  digitalWrite(motorR_r, HIGH);
-  analogWrite(motorR, 100);
+  stop();
+  analogWrite(motorL_f, 100);
+  analogWrite(motorR_r, 100);
 }
 
 void left() {
-  digitalWrite(motorL_f, LOW);
-  digitalWrite(motorL_r, HIGH);
-  analogWrite(motorL, 100);
-  digitalWrite(motorR_f, HIGH);
-  digitalWrite(motorR_r, LOW);
-  analogWrite(motorR, 100);
+  analogWrite(motorL_r, 100);
+  analogWrite(motorR_f, 100);
 }
