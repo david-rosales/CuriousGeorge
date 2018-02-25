@@ -4,7 +4,6 @@ Servo left_grab;
 Servo right_grab;
 Servo pick_up;
 String command;
-<<<<<<< HEAD
 int left_pin = 2;
 int right_pin = 6;
 int lift_pin = 3;
@@ -12,18 +11,6 @@ int motorL_f = 9;
 int motorL_r = 10;
 int motorR_f = 5;
 int motorR_r = 4;
-=======
-int num = 1;
-int left_pin = num;
-int right_pin = num;
-int lift_pin = num;
-int motorL = num;
-int motorL_f = num;
-int motorL_r = num;
-int motorR = num;
-int motorR_f = num;
-int motorR_r = num;
->>>>>>> 6dbce27d9d45196cb93b2749041881a66c0e5d90
 int pos_l_grab = 90;
 int pos_l_ungrab = 135;
 int pos_r_grab = 90;
